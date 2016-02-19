@@ -223,13 +223,14 @@ void GenericTCPClient(void)
             #if defined(STACK_USE_UART)
 			putrsUART((ROM char*)"Socket ready...\r\n");
 			#endif
-			
+
 			// Place the application protocol data into the transmit buffer.  For this example, we are connected to an HTTP server, so we'll send an HTTP GET request.
-			TCPIP_TCP_StringPut(MySocket, (BYTE*)"GET ");
-			TCPIP_TCP_StringPut(MySocket, "www.mnubo.com");
-			TCPIP_TCP_StringPut(MySocket, (BYTE*)" HTTP/1.0\r\nHost: ");
-			TCPIP_TCP_StringPut(MySocket, "mnubo.com");
-			TCPIP_TCP_StringPut(MySocket, (BYTE*)"\r\nConnection: close\r\n\r\n");
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"POST /rest/objects HTTP/1.1\r\n");
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"Host: dcs002-ds1:8090\r\n");
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"Accept: */*\r\n");
+            TCPIP_TCP_StringPut(MySocket, (BYTE*)"Authorization: Bearer\r\n");
+            TCPIP_TCP_StringPut(MySocket, (BYTE*)"Content-Type: application/json\r\n");
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"Connection: keep-alive\r\n"); // close
 
 			// Send the packet
 			TCPIP_TCP_Flush(MySocket);

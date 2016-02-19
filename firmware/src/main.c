@@ -71,9 +71,10 @@ int main ( void )
 {
     /* Initialize all MPLAB Harmony modules, including application(s). */
     SYS_Initialize ( NULL );
-    GenericTCPClient();
     while ( true )
     {
+        
+    GenericTCPClient();
         /* Maintain state machines of all polled MPLAB Harmony modules. */
         SYS_Tasks ( );
 
