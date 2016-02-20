@@ -54,6 +54,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
+#include "GenericTypeDefs.h"
+#include "tcpip/tcp.h"
+#include "tcpip/tcpip.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -152,7 +155,153 @@ void APP_Tasks ( void )
     }
 }
  
+void GenericTCPClient(void)
+{
+	BYTE 				i;
+	WORD				w;
+	BYTE				vBuffer[9];
+	static DWORD		Timer;
+	static TCP_SOCKET	MySocket = INVALID_SOCKET;
+	static enum _GenericTCPExampleState
+	{
+		SM_HOME = 0,
+		SM_SOCKET_OBTAINED,
+		SM_PROCESS_RESPONSE,
+		SM_DISCONNECT,
+		SM_DONE
+	} GenericTCPExampleState = SM_DONE;
 
+    TCP_PORT localPort = 80; 
+    IP_MULTI_ADDRESS* localAddress = malloc(sizeof(IP_MULTI_ADDRESS));
+    uint32_t TICK_SECOND = 5;
+    localAddress->v4Add.Val = 0x0AEDE058;
+            
+	switch(GenericTCPExampleState)
+	{
+		case SM_HOME:
+			// Connect a socket to the remote TCP server
+            
+             TCPIP_TCP_ServerOpen(IP_ADDRESS_TYPE_IPV4, localPort, localAddress);
+			
+			// Abort operation if no TCP socket of type TCP_PURPOSE_GENERIC_TCP_CLIENT is available
+			// If this ever happens, you need to go add one to TCPIPConfig.h
+			if(MySocket == INVALID_SOCKET)
+				break;
+
+			#if defined(STACK_USE_UART)
+			putrsUART((char*)"\r\n\r\nConnecting using Microchip TCP API...\r\n");
+			#endif
+
+			GenericTCPExampleState++;
+//			Timer = SYS_TICK_Get();
+			break;
+
+		case SM_SOCKET_OBTAINED:
+			// Wait for the remote server to accept our connection request
+			if(!TCPIP_TCP_IsConnected(MySocket))
+			{
+				// Time out if too much time is spent in this state
+				/**if(Tick()-Timer > 5*TICK_SECOND)
+				{
+					// Close the socket so it can be used by other modules
+					TCPIP_TCP_Disconnect(MySocket);
+                    #if defined(STACK_USE_UART)
+			        putrsUART((ROM char*)"Socket timed out...\r\n");
+			        #endif
+					MySocket = INVALID_SOCKET;
+					GenericTCPExampleState--;
+				}*/
+				break;
+			}
+
+//			Timer = TickGet();
+
+			// Make certain the socket can be written to
+			if(TCPIP_TCP_PutIsReady(MySocket) < 125u)
+				break;
+            
+            #if defined(STACK_USE_UART)
+			putrsUART((ROM char*)"Socket ready...\r\n");
+			#endif
+
+			// Place the application protocol data into the transmit buffer.  For this example, we are connected to an HTTP server, so we'll send an HTTP GET request.
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"POST /rest/objects HTTP/1.1\r\n");
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"Host: dcs002-ds1:8090\r\n");
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"Accept: */*\r\n");
+            TCPIP_TCP_StringPut(MySocket, (BYTE*)"Authorization: Bearer\r\n");
+            TCPIP_TCP_StringPut(MySocket, (BYTE*)"Content-Type: application/json\r\n");
+			TCPIP_TCP_StringPut(MySocket, (BYTE*)"Connection: keep-alive\r\n"); // close
+
+			// Send the packet
+			TCPIP_TCP_Flush(MySocket);
+			GenericTCPExampleState++;
+            #if defined(STACK_USE_UART)
+			putrsUART((ROM char*)"Sent HTTP data...\r\n");
+			#endif
+            #if defined(STACK_USE_UART)
+            putsUART("...Response from Server:");
+			#endif
+			break;
+
+		case SM_PROCESS_RESPONSE:
+			// Check to see if the remote node has disconnected from us or sent us any application data
+			// If application data is available, write it to the UART
+			if(!TCPIP_TCP_IsConnected(MySocket))
+			{
+				GenericTCPExampleState = SM_DISCONNECT;
+				// Do not break;  We might still have data in the TCP RX FIFO waiting for us
+			}
+	
+			// Get count of RX bytes waiting
+			w = TCPIP_TCP_GetIsReady(MySocket);	
+	
+			// Obtian and print the server reply
+			i = sizeof(vBuffer)-1;
+			vBuffer[i] = '\0';
+			while(w)
+			{
+				if(w < i)
+				{
+					i = w;
+					vBuffer[i] = '\0';
+				}
+				w -= TCPIP_TCP_ArrayGet(MySocket, vBuffer, i);
+				#if defined(STACK_USE_UART)
+                putsUART((char*)vBuffer);
+                //putcUART('x');
+				#endif
+				
+				// putsUART is a blocking call which will slow down the rest of the stack 
+				// if we shovel the whole TCP RX FIFO into the serial port all at once.  
+				// Therefore, let's break out after only one chunk most of the time.  The 
+				// only exception is when the remote node disconncets from us and we need to 
+				// use up all the data before changing states.
+				if(GenericTCPExampleState == SM_PROCESS_RESPONSE)
+					break;
+			}
+	
+			break;
+	
+		case SM_DISCONNECT:
+			// Close the socket so it can be used by other modules
+			// For this application, we wish to stay connected, but this state will still get entered if the remote server decides to disconnect
+			TCPIP_TCP_Disconnect(MySocket);
+
+            #if defined(STACK_USE_UART)
+			putrsUART((ROM char*)"Disconnected.\r\n");
+			#endif
+
+			MySocket = INVALID_SOCKET;
+			GenericTCPExampleState = SM_DONE;
+			break;
+	
+		case SM_DONE:
+			// Do nothing unless the user pushes BUTTON1 and wants to restart the whole connection/download process
+			//if(BUTTON1_IO == 0u)
+				GenericTCPExampleState = SM_HOME;
+			break;
+	}
+}
 /*******************************************************************************
  End of File
  */
