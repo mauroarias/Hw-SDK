@@ -137,20 +137,20 @@ void RESTAPI_Tasks ( void )
             restapiData.button1 = BSP_SwitchStateGet(BSP_SWITCH_1);
             restapiData.button2 = BSP_SwitchStateGet(BSP_SWITCH_2);
             restapiData.button3 = BSP_SwitchStateGet(BSP_SWITCH_3);
-            restapiData.remotePort = 21029; 
+            restapiData.remotePort = 8090; 
             restapiData.remoteAddress = malloc(sizeof(IP_MULTI_ADDRESS));
             restapiData.mySocket = INVALID_SOCKET;
             restapiData.tick_second = 5;
-            restapiData.remoteAddress->v4Add.Val = 0x6E00A8C0; //192.168.0.110
+            restapiData.remoteAddress->v4Add.Val = 0x88f1ED0A;//2FF5ED0A;
             restapiData.connectionRetry = 0;
             restapiData.bodyType=OBJECTS;
 
             Object * object = malloc(sizeof(Object));
-            object->objectType = "111";
+            object->objectType = "sdk_hw";
             
             Event * event = malloc(sizeof(Event));
             event->object = object;
-            event->eventType = "222";
+            event->eventType = "new_event";
             
             event->timeseries = malloc(sizeof(KeyValue)*3);
             event->timeseriesSize = 3;
@@ -165,8 +165,8 @@ void RESTAPI_Tasks ( void )
             event->timeseries[2].value = malloc(sizeof(char)*50);
             
             restapiData.event = event;
-            restapiData.authorization = "Authorization: Bearer eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..wMioLbXiUNOYGlM83eCDTg.WQaN13VTLfKJmk8mMo6FEFSaVJCLkTbtl_aitFe5gt05v2uzdUnA9vQ4OSMzPkr0E3O9dwdP0NoxRF0V2zIDpHtYZZLblSNRxqPvarhXSyPObuW5gQ_OozLFdUrKqcqfwS1yuK9i5nk3j0KQKFoDI_YcfP3y8JzdJ-ddYRIZQ35sgqfMlB19fB3Mmnsu3-s31CSpXe-4mhcQ5W9JmyGh-_KAiQ8MeG7UDUhJqXkTpwNMC-iUQqF6wSaQgZVEeXuQnNwfZMvR_VqUkTF7QU0LLL3TAw_sdO_TIeZaEhgd98ecUjxezgJOjC1w3Zh_AFHxNZ_LGtasG79ZEd-ND8WS2UHLwUOR2xriZiOOIlVi5Hq3m5xcXTFOVzlMlMp5tQFEfRPlMV104mDjD_rlrpzDGPR6dS9k25_Vysunk30218j1RHbFlOLSoIh0zJl-tigsi-fHl1CfBrecdd7CBGsY1JddCcGqmtLHtYzZqOkRVtkpSwFVJE_pj4Cgowk2mi1qsl_VMwDiedDzz19EO1WdqvUggYtPI_8PweR59cMGNwv04CirlBIttL4efzo0IRa9SegWx1TVe2VPyokTz63xdX1WJiolqQrNVP2X-wJ3-YJhsSaE2apQ2ftAWUv34LNLQ2RDqcxjNTE5SZawI6XuzN96wK621ANoL-fj-71yYgOgmFB8DTQVqRqbBhZ6iN3R.1ITPVWmOWUF4xy6U9wTT5w";
-            restapiData.hostPort = "192.168.0.110:21029";
+            restapiData.authorization = "Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJzY29wZSI6WyJBTEwiXSwiYXBwdHlwZSI6IlNBTkRCT1giLCJuYW1lc3BhY2UiOiJhcnRlbTEiLCJ3c28yYWNjZXNzdG9rZW5pZCI6IklzWEZGcHp3Y3dLWVVVc2Nhc1NESUY1N29PZXdacldjdGFLZnBKM0l3RzZMMERiRUI4IiwiZXhwIjoxNDU5MDk1NzE4LCJhdXRob3JpdGllcyI6WyJST0xFX0NMSUVOVCJdLCJqdGkiOiIwY2U4ZDg0Mi0xNjkxLTRmZmItOTViMy04YTc1OTNjYjZlYTgiLCJjbGllbnRfaWQiOiJ4RVNuS3ZXUWJIR0VIUDNCcHRYV2w2THVOSWtyOGllb2dQZW9Na2dWOGJoZURwZENkQyIsImFjY291bnQiOiJhcnRlbTEiLCJ1c2VyLWFnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNi4xOyBXT1c2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzQ4LjAuMjU2NC4xMDMgU2FmYXJpLzUzNy4zNiJ9.NfAl9V8pReJ3OGJt-0PmoD2mpFHA5kJjFdcnJ7UqXiu_rwmX6qUQp_iI0c6e8og82L0-YTtQBZOIxEOiEsw_prluKwMxXmyWQaBXwiEb4_w2ttBOVvylGKVRzKcO-9GTRQlDzEcZEp8qF7xn3Mz6lWDBc1N1jU2leeWSm-aYTGrO7bn2XbFmQ0ezMGfXeCJRUqSqXyHbFc6ZKIDjOLaW1NF2vbppho7g5kottkSvxtWW8hbTvAiQlfPZAdOqt-V7zNNj2vF43-UF1VxDIs2w18fu1HOXSQdDY_A_RjV_9h6BmakMKBODMiN8zmJD2mO2LsIy1W-g0hs1WXSiS3dZ4pGyBJ16sCWwNWEYbBWvgbZNMJmSFJXjaxUizvH6GxcLtinpWRfiWvyVRU32Xxfd7e_n9Ds2y_kB2uDEg4h-pPyqzv78uBlGnit_DR_y2HblPVzzx5bLtbRcAkH_cQnTLg-g9jRwVP3ft0MGIomU__CrvI44t00N9ZaEEddyy7BGqZHh1K-eAZcPj-InG7RzB3pCb7mmdSljXvjS8l1r8WjZTWpwi6ybTD4N5v90Mj6ZYiagsdH89DpzwuA5Pdk4AWVuboML1fI5_gAecjcO7xAfSlHMI_YvPYfR8ImUNqCY4IE1BgVk-a67_lIdkPNX2h6cItAfpYoJGbirZ3Cg85s";
+            restapiData.hostPort = "10.237.241.136:8090";
             break;
         }
         case RESTAPI_STATE_WAITING_CREATE_OBJECT:

@@ -187,15 +187,6 @@ const TCPIP_TCP_MODULE_CONFIG tcpipTCPInitData =
 
 
 
-/*** DHCP client Initialization Data ***/
-const TCPIP_DHCP_MODULE_CONFIG tcpipDHCPInitData =
-{     
-    .dhcpEnable     = TCPIP_DHCP_CLIENT_ENABLED,   
-    .dhcpTmo        = TCPIP_DHCP_TIMEOUT,
-    .dhcpCliPort    = TCPIP_DHCP_CLIENT_CONNECT_PORT,
-    .dhcpSrvPort    = TCPIP_DHCP_SERVER_LISTEN_PORT,
-
-};
 
 
 /*** ICMP Server Initialization Data ***/
@@ -271,7 +262,6 @@ const TCPIP_STACK_MODULE_CONFIG TCPIP_STACK_MODULE_CONFIG_TBL [] =
     {TCPIP_MODULE_ARP,           &tcpipARPInitData},              // TCPIP_MODULE_ARP
     {TCPIP_MODULE_UDP,           &tcpipUDPInitData},              // TCPIP_MODULE_UDP,
     {TCPIP_MODULE_TCP,           &tcpipTCPInitData},              // TCPIP_MODULE_TCP,
-    {TCPIP_MODULE_DHCP_CLIENT,   &tcpipDHCPInitData},             // TCPIP_MODULE_DHCP_CLIENT,
     {TCPIP_MODULE_ANNOUNCE,      &tcpipAnnounceInitData},                     // TCPIP_MODULE_ANNOUNCE,
     {TCPIP_MODULE_DNS_CLIENT,&tcpipDNSClientInitData}, // TCPIP_MODULE_DNS_CLIENT,
     {TCPIP_MODULE_NBNS,          &tcpipNBNSInitData},                           // TCPIP_MODULE_NBNS
