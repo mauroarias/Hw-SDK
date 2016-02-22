@@ -5,7 +5,7 @@
 #include "system_config.h"
 
     int32_t getDelay(int32_t multip);
-    void generateDeviceId(char* deviceId, int32_t random);
+    void generateDeviceId(char* deviceId, uint32_t random);
     
 #endif /* _EXAMPLE_FILE_NAME_H */
 

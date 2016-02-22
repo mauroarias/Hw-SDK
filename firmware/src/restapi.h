@@ -131,10 +131,13 @@ typedef struct
     int32_t connectionRetry;
     char* authorization;
     char* hostPort;
-    Event* event;
+    Event* doorEvent;
+    Event* temperature;
     BodyType bodyType;
-    int32_t random;
-    
+    float random;
+    char* request;
+    Event* event;
+    float tempX;
 } RESTAPI_DATA;
 
 

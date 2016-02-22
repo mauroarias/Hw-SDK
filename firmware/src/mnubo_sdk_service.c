@@ -88,6 +88,7 @@ void appendTimeSeries (char * output,
     while (i < event->timeseriesSize) {
     //for (int i=0; i<event->timeseriesSize; i++) {
         char value[MAX_VALUE_SIZE];
+        memset(value,0,sizeof(value));
         if (strcmp(event->timeseries[i].type, "float") == 0) {
             floatToString (value, *((float *)(event->timeseries[i].value)));
             line2String (output, event->timeseries[i].key, value, false);       
@@ -109,7 +110,8 @@ void appendTimeSeries (char * output,
 }
                        
 char * eventToJson (Event * event) {
-    char * json = (char*)malloc(400*sizeof(char));    
+    char * json = (char*)malloc(400*sizeof(char));
+    memset(json, 0, sizeof(json));
     char * current = json;
     strcat (current, "[{");
 
@@ -130,6 +132,7 @@ char * eventToJson (Event * event) {
 
 char * objectToJson (Object * object, bool isShort) {
     char * json = (char*)malloc(200*sizeof(char));
+    memset(json, 0, sizeof(json));
     char * current = json;
     strcat (current, "{");
     
@@ -168,6 +171,7 @@ char* postObject(char* request, char* hostPort, char* authorization, Object* obj
 	strcat(request, "\r\n");
 	strcat(request, "\r\n");
 	strcat(request, body);
+    free(body);
     return request;
 }
 
@@ -191,5 +195,6 @@ char* postEvent(char* request, char* hostPort, char* authorization, Event* event
 	strcat(request, "\r\n");
 	strcat(request, "\r\n");
 	strcat(request, body);
+    free(body);
     return request;
 }
