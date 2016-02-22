@@ -56,18 +56,16 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/clk/sys_clk_static.h"
 #include "system/devcon/sys_devcon.h"
 #include "system/int/sys_int.h"
-#include "system/console/sys_console.h"
 #include "system/random/sys_random.h"
 #include "system/tmr/sys_tmr.h"
-#include "system/reset/sys_reset.h"
 #include "driver/tmr/drv_tmr.h"
 #include "system/ports/sys_ports.h"
-#include "system/command/sys_command.h"
 
 
 #include "tcpip/tcpip.h"
 #include "driver/ethmac/drv_ethmac.h"
 #include "app.h"
+#include "restapi.h"
 
 
 // DOM-IGNORE-BEGIN
@@ -104,7 +102,6 @@ typedef struct
     SYS_MODULE_OBJ  sysDevcon;
     SYS_MODULE_OBJ  sysTmr;
     SYS_MODULE_OBJ  drvTmr0;
-    SYS_MODULE_OBJ  sysConsole0;
     SYS_MODULE_OBJ  tcpip;
 
 } SYSTEM_OBJECTS;

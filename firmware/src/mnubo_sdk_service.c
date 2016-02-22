@@ -11,9 +11,7 @@
  */
 /* ************************************************************************** */
 #include "mnubo_sdk_service.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+
 Event * buildEvent() {
     return (Event*)malloc(sizeof(Event));
 }
@@ -40,7 +38,7 @@ void uuidToString(char * output,
 void line2String(char * input, 
                  const char * name, 
                  const char * value,
-                 bool isString) {
+                 int isString) {
     if (name != NULL) {
         strcat (input, "\"");
         strcat (input, name);
@@ -87,7 +85,7 @@ void appendTimestamp (char * output,
 void appendTimeSeries (char * output,
                        Event * event) {
     int i=0;  
-    while (i<event->timeseriesSize) {
+    while (i < event->timeseriesSize) {
     //for (int i=0; i<event->timeseriesSize; i++) {
         char value[MAX_VALUE_SIZE];
         if (strcmp(event->timeseries[i].type, "float") == 0) {
@@ -110,66 +108,88 @@ void appendTimeSeries (char * output,
     }
 }
                        
-char * toJson (Event * event) {
-    char * json = (char*)malloc(4096*sizeof(char));    
+char * eventToJson (Event * event) {
+    char * json = (char*)malloc(400*sizeof(char));    
     char * current = json;
-    strcat (current, "{");
-    
-    // Append object & deviceid
-    appendObject (json, event->object);
+    strcat (current, "[{");
+
+    //Append object
+    line2String (json, OBJECT, objectToJson(event->object, true), false);
     strcat (json, ",");
-    	
-    // Append eventid
-    appendEventId (json, event);
-    strcat (json, ",");
-    
-    // Append eventtype
-    appendEventType (json, event);
-    strcat (json, ",");
-    
-    // Append timestamp
-    appendTimestamp (json, event);
+
+    //Append event_type
+    line2String (json, EVENT_TYPE, event->eventType, true);
     strcat (json, ",");
     
     // Append timeseries
     appendTimeSeries (json, event);
     
-    strcat (current, "}\n");
+    strcat (current, "}]\n");
     return json;
 }
+
+char * objectToJson (Object * object, bool isShort) {
+    char * json = (char*)malloc(200*sizeof(char));
+    char * current = json;
+    strcat (current, "{");
     
-////-----------------------------
-//// Main function
-////-----------------------------
-//int main() {
-//    Event * event = malloc(sizeof(Event));
-//    Object * object = malloc(sizeof(Object));
-//    
-//    object->deviceId = "TestDevice";
-//    event->object = object;
-//    event->eventType = "TestEventType";
-//    event->timestamp = 1234567890;
-//    strncpy ((char *)event->eventId, "1234567890ABCDEF", 16);
-//    
-//    event->timeseries = malloc(sizeof(KeyValue)*2);
-//    event->timeseriesSize = 2;
-//    event->timeseries[0].type  = malloc(sizeof(char)*MAX_TYPE_SIZE);
-//    event->timeseries[1].type  = malloc(sizeof(char)*MAX_TYPE_SIZE);
-//    event->timeseries[0].key   = malloc(sizeof(char)*MAX_KEY_SIZE);
-//    event->timeseries[1].key   = malloc(sizeof(char)*MAX_KEY_SIZE);
-//    event->timeseries[0].value = malloc(sizeof(char)*MAX_VALUE_SIZE);
-//    event->timeseries[1].value = malloc(sizeof(char)*MAX_VALUE_SIZE);
-//    
-//    strcpy(event->timeseries[0].type, "float");
-//    strcpy(event->timeseries[0].key, "temparature");
-//    float value = 21.50;
-//    event->timeseries[0].value = (void *)&value;
-//    
-//    strcpy(event->timeseries[1].type, "string");
-//    strcpy(event->timeseries[1].key, "status");
-//    strcpy(event->timeseries[1].value, "open");
-//    char * json = toJson (event);
-//    printf ("%s\n", json);
-//    free (json);
-//    free (event->timeseries);
-//}
+    //Append deviceid
+    line2String (json, DEVICE_ID, object->deviceId, true);
+    
+    if(!isShort)
+    {    
+        strcat (json, ",");
+    	
+        // Append device_type
+        line2String (json, OBJECT_TYPE, object->objectType, true);
+    }
+    
+    strcat (current, "}");
+    return json;
+}
+
+char* postObject(char* request, char* hostPort, char* authorization, Object* object)
+{
+    char * body = objectToJson (object, false);
+
+    char size[10];
+    sprintf(size,"%d",strlen(body));
+	strcat(request, "POST /rest/objects HTTP/1.1\r\n");
+	strcat(request, "Host: ");
+    strcat(request, hostPort);
+    strcat(request, "\r\n");
+	strcat(request, "Accept: */*\r\n");
+    strcat(request, authorization);
+    strcat(request, "\r\n");
+    strcat(request, "Content-Type: application/json\r\n");
+	strcat(request, "Connection: keep-alive\r\n");
+	strcat(request, "Content-Length: ");
+	strcat(request, size);
+	strcat(request, "\r\n");
+	strcat(request, "\r\n");
+	strcat(request, body);
+    return request;
+}
+
+char* postEvent(char* request, char* hostPort, char* authorization, Event* event)
+{
+    char * body = eventToJson (event);
+
+    char size[10];
+    sprintf(size,"%d",strlen(body));
+	strcat(request, "POST /rest/events HTTP/1.1\r\n");
+	strcat(request, "Host: ");
+    strcat(request, hostPort);
+    strcat(request, "\r\n");
+	strcat(request, "Accept: */*\r\n");
+    strcat(request, authorization);
+    strcat(request, "\r\n");
+    strcat(request, "Content-Type: application/json\r\n");
+	strcat(request, "Connection: keep-alive\r\n");
+	strcat(request, "Content-Length: ");
+	strcat(request, size);
+	strcat(request, "\r\n");
+	strcat(request, "\r\n");
+	strcat(request, body);
+    return request;
+}

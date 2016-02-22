@@ -348,17 +348,6 @@ const SYS_DEVCON_INIT sysDevconInit =
 // </editor-fold>
 
 
-//<editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Initialization Data">
-// </editor-fold>
-//<editor-fold defaultstate="collapsed" desc="SYS_COMMAND Initialization Data">
-/*** System Command Initialization Data ***/
-
-SYS_CMD_INIT sysCmdInit =
-{
-    .moduleInit = {0},
-    .consoleCmdIOParam = SYS_CMD_FULL_COMMAND_READ_CONSOLE_IO_PARAM,
-};
-// </editor-fold>
 // *****************************************************************************
 // *****************************************************************************
 // Section: Static Initialization Functions
@@ -406,12 +395,9 @@ void SYS_Initialize ( void* data )
  
     /* Initialize System Services */
     SYS_INT_Initialize();  
-    sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, NULL);
-
 
     /*** TMR Service Initialization Code ***/
     sysObj.sysTmr  = SYS_TMR_Initialize(SYS_TMR_INDEX_0, (const SYS_MODULE_INIT  * const)&sysTmrInitData);
-    SYS_CMD_Initialize((SYS_MODULE_INIT*)&sysCmdInit);
     SYS_RANDOM_Initialize(0, 0);
 
     /* Initialize Middleware */
@@ -434,6 +420,7 @@ void SYS_Initialize ( void* data )
 
     /* Initialize the Application */
     APP_Initialize();
+    RESTAPI_Initialize();
 }
 
 

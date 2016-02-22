@@ -19,8 +19,11 @@
           </logicalFolder>
         </logicalFolder>
         <itemPath>../src/app.h</itemPath>
-        <itemPath>../src/app1.h</itemPath>
-        <itemPath>../src/app2.h</itemPath>
+        <itemPath>../src/restapi.h</itemPath>
+        <itemPath>../src/mnubo_sdk_service.h</itemPath>
+        <itemPath>../src/utils.h</itemPath>
+        <itemPath>../src/mnubo_sdk_beans.h</itemPath>
+        <itemPath>../src/mnubo.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_eth_sk" projectFiles="true">
@@ -54,35 +57,23 @@
           <itemPath>../../../../framework/driver/driver.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f3" displayName="system" projectFiles="true">
-          <logicalFolder name="f1" displayName="command" projectFiles="true">
-            <itemPath>../../../../framework/system/command/sys_command.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f2" displayName="common" projectFiles="true">
+          <logicalFolder name="f1" displayName="common" projectFiles="true">
             <itemPath>../../../../framework/system/common/sys_common.h</itemPath>
             <itemPath>../../../../framework/system/common/sys_module.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="console" projectFiles="true">
-            <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../../../../framework/system/console/src/sys_console_local.h</itemPath>
-            </logicalFolder>
-            <itemPath>../../../../framework/system/console/sys_console.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f4" displayName="devcon" projectFiles="true">
+          <logicalFolder name="f2" displayName="devcon" projectFiles="true">
             <itemPath>../../../../framework/system/devcon/sys_devcon.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="int" projectFiles="true">
+          <logicalFolder name="f3" displayName="int" projectFiles="true">
             <itemPath>../../../../framework/system/int/sys_int.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f6" displayName="ports" projectFiles="true">
+          <logicalFolder name="f4" displayName="ports" projectFiles="true">
             <itemPath>../../../../framework/system/ports/sys_ports.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f7" displayName="random" projectFiles="true">
+          <logicalFolder name="f5" displayName="random" projectFiles="true">
             <itemPath>../../../../framework/system/random/sys_random.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f8" displayName="reset" projectFiles="true">
-            <itemPath>../../../../framework/system/reset/sys_reset.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f9" displayName="tmr" projectFiles="true">
+          <logicalFolder name="f6" displayName="tmr" projectFiles="true">
             <itemPath>../../../../framework/system/tmr/sys_tmr.h</itemPath>
           </logicalFolder>
           <itemPath>../../../../framework/system/system.h</itemPath>
@@ -108,7 +99,6 @@
             <itemPath>../../../../framework/tcpip/src/icmp_manager.h</itemPath>
             <itemPath>../../../../framework/tcpip/src/nbns_manager.h</itemPath>
             <itemPath>../../../../framework/tcpip/src/tcpip_announce_manager.h</itemPath>
-            <itemPath>../../../../framework/tcpip/src/tcpip_commands_manager.h</itemPath>
             <itemPath>../../../../framework/tcpip/src/hash_fnv.h</itemPath>
             <itemPath>../../../../framework/tcpip/src/link_list.h</itemPath>
             <itemPath>../../../../framework/tcpip/src/oahash.h</itemPath>
@@ -131,7 +121,6 @@
           <itemPath>../../../../framework/tcpip/dns.h</itemPath>
           <itemPath>../../../../framework/tcpip/icmp.h</itemPath>
           <itemPath>../../../../framework/tcpip/nbns.h</itemPath>
-          <itemPath>../../../../framework/tcpip/tcpip_commands.h</itemPath>
           <itemPath>../../../../framework/tcpip/tcpip_helpers.h</itemPath>
           <itemPath>../../../../framework/tcpip/tcpip_manager.h</itemPath>
           <itemPath>../../../../framework/tcpip/tcpip.h</itemPath>
@@ -160,12 +149,7 @@
                     <itemPath>../src/system_config/default/framework/system/clk/src/sys_clk_static.c</itemPath>
                   </logicalFolder>
                 </logicalFolder>
-                <logicalFolder name="f2" displayName="console" projectFiles="true">
-                  <logicalFolder name="f1" displayName="src" projectFiles="true">
-                    <itemPath>../src/system_config/default/framework/system/console/src/sys_console_static.c</itemPath>
-                  </logicalFolder>
-                </logicalFolder>
-                <logicalFolder name="f3" displayName="ports" projectFiles="true">
+                <logicalFolder name="f2" displayName="ports" projectFiles="true">
                   <logicalFolder name="f1" displayName="src" projectFiles="true">
                     <itemPath>../src/system_config/default/framework/system/ports/src/sys_ports_static.c</itemPath>
                   </logicalFolder>
@@ -180,6 +164,10 @@
         </logicalFolder>
         <itemPath>../src/app.c</itemPath>
         <itemPath>../src/main.c</itemPath>
+        <itemPath>../src/restapi.c</itemPath>
+        <itemPath>../src/mnubo_sdk_service.c</itemPath>
+        <itemPath>../src/utils.c</itemPath>
+        <itemPath>../src/mnubo.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_eth_sk" projectFiles="true">
@@ -212,38 +200,28 @@
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="f3" displayName="system" projectFiles="true">
-          <logicalFolder name="f1" displayName="command" projectFiles="true">
-            <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../../../../framework/system/command/src/sys_command.c</itemPath>
-            </logicalFolder>
-          </logicalFolder>
-          <logicalFolder name="f2" displayName="devcon" projectFiles="true">
+          <logicalFolder name="f1" displayName="devcon" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../framework/system/devcon/src/sys_devcon.c</itemPath>
               <itemPath>../../../../framework/system/devcon/src/sys_devcon_pic32mx.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="int" projectFiles="true">
+          <logicalFolder name="f2" displayName="int" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../framework/system/int/src/sys_int_pic32.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="ports" projectFiles="true">
+          <logicalFolder name="f3" displayName="ports" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../framework/system/ports/src/sys_ports.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="random" projectFiles="true">
+          <logicalFolder name="f4" displayName="random" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../framework/system/random/src/sys_random.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f6" displayName="reset" projectFiles="true">
-            <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../../../../framework/system/reset/src/sys_reset.c</itemPath>
-            </logicalFolder>
-          </logicalFolder>
-          <logicalFolder name="f7" displayName="tmr" projectFiles="true">
+          <logicalFolder name="f5" displayName="tmr" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../framework/system/tmr/src/sys_tmr.c</itemPath>
             </logicalFolder>
@@ -266,7 +244,6 @@
             <itemPath>../../../../framework/tcpip/src/icmp.c</itemPath>
             <itemPath>../../../../framework/tcpip/src/nbns.c</itemPath>
             <itemPath>../../../../framework/tcpip/src/tcpip_announce.c</itemPath>
-            <itemPath>../../../../framework/tcpip/src/tcpip_commands.c</itemPath>
             <itemPath>../../../../framework/tcpip/src/hash_fnv.c</itemPath>
             <itemPath>../../../../framework/tcpip/src/oahash.c</itemPath>
             <itemPath>../../../../framework/tcpip/src/tcpip_heap_alloc.c</itemPath>
@@ -329,7 +306,7 @@
       </makeCustomizationType>
       <C32>
         <property key="additional-warnings" value="false"/>
-        <property key="enable-app-io" value="true"/>
+        <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>

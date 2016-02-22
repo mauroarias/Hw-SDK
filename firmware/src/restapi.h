@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    app2.h
+    restapi.h
 
   Summary:
     This header file provides prototypes and definitions for the application.
@@ -43,8 +43,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _APP2_H
-#define _APP2_H
+#ifndef _RESTAPI_H
+#define _RESTAPI_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -52,12 +52,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
 #include "system_config.h"
 #include "system_definitions.h"
+#include "utils.h"
+#include "mnubo_sdk_service.h"
+#include "mnubo_sdk_beans.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -87,11 +86,18 @@ extern "C" {
 typedef enum
 {
 	/* Application's state machine's initial state. */
-	APP2_STATE_INIT=0,
+	RESTAPI_STATE_INIT=0,
+    RESTAPI_STATE_HOME=1,
+    RESTAPI_STATE_SOCKET_OBTAINED=2,
+    RESTAPI_STATE_PROCESS_RESPONSE=3,
+    RESTAPI_STATE_DISCONNECT=4,
+    RESTAPI_STATE_DISCONNECT_DONE=5,
+    RESTAPI_STATE_WAITING_FOR_EVENT=6,
+    RESTAPI_STATE_WAITING_CREATE_OBJECT=7,
 
 	/* TODO: Define states used by the application state machine. */
 
-} APP2_STATES;
+} RESTAPI_STATES;
 
 
 // *****************************************************************************
@@ -110,12 +116,26 @@ typedef enum
 typedef struct
 {
     /* The application's current state */
-    APP2_STATES state;
-
-    /* TODO: Define any additional data used by the application. */
-
-
-} APP2_DATA;
+    RESTAPI_STATES state;
+    BSP_SWITCH_STATE btn1;
+    BSP_SWITCH_STATE button1;
+    BSP_SWITCH_STATE btn2;
+    BSP_SWITCH_STATE button2;
+    BSP_SWITCH_STATE btn3;
+    BSP_SWITCH_STATE button3;
+    TCP_PORT remotePort; 
+    IP_MULTI_ADDRESS* remoteAddress;
+    uint32_t tick_second;
+    TCP_SOCKET mySocket;
+    int32_t connectionTimeOut;
+    int32_t connectionRetry;
+    char* authorization;
+    char* hostPort;
+    Event* event;
+    BodyType bodyType;
+    int32_t random;
+    
+} RESTAPI_DATA;
 
 
 // *****************************************************************************
@@ -135,7 +155,7 @@ typedef struct
 
 /*******************************************************************************
   Function:
-    void APP2_Initialize ( void )
+    void RESTAPI_Initialize ( void )
 
   Summary:
      MPLAB Harmony application initialization routine.
@@ -157,19 +177,19 @@ typedef struct
 
   Example:
     <code>
-    APP2_Initialize();
+    RESTAPI_Initialize();
     </code>
 
   Remarks:
     This routine must be called from the SYS_Initialize function.
 */
 
-void APP2_Initialize ( void );
+void RESTAPI_Initialize ( void );
 
 
 /*******************************************************************************
   Function:
-    void APP2_Tasks ( void )
+    void RESTAPI_Tasks ( void )
 
   Summary:
     MPLAB Harmony Demo application tasks function
@@ -190,17 +210,22 @@ void APP2_Initialize ( void );
 
   Example:
     <code>
-    APP2_Tasks();
+    RESTAPI_Tasks();
     </code>
 
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
 
-void APP2_Tasks( void );
+void RESTAPI_Tasks( void );
+
+bool isSwitch1StateChanged();
+bool isSwitch2StateChanged();
+bool isSwitch3StateChanged();
 
 
-#endif /* _APP2_H */
+
+#endif /* _RESTAPI_H */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

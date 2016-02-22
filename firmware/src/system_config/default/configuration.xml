@@ -150,10 +150,6 @@
         <Path>Header Files/framework/tcpip/stack</Path>
       </File>
       <File>
-        <Name>tcpip_commands.h</Name>
-        <Path>Header Files/framework/tcpip</Path>
-      </File>
-      <File>
         <Name>random.h</Name>
         <Path>Header Files/framework/crypto/src</Path>
       </File>
@@ -172,10 +168,6 @@
       <File>
         <Name>tcpip_helpers_private.h</Name>
         <Path>Header Files/framework/tcpip/stack</Path>
-      </File>
-      <File>
-        <Name>sys_command.c</Name>
-        <Path>Source Files/framework/system/command/src</Path>
       </File>
       <File>
         <Name>dns.c</Name>
@@ -210,10 +202,6 @@
         <Path>Header Files/framework/tcpip</Path>
       </File>
       <File>
-        <Name>sys_console.h</Name>
-        <Path>Header Files/framework/system/console</Path>
-      </File>
-      <File>
         <Name>tcp.c</Name>
         <Path>Source Files/framework/tcpip/stack</Path>
       </File>
@@ -234,10 +222,6 @@
         <Path>Header Files/framework/tcpip/stack</Path>
       </File>
       <File>
-        <Name>sys_reset.h</Name>
-        <Path>Header Files/framework/system/reset</Path>
-      </File>
-      <File>
         <Name>tcpip_helpers.c</Name>
         <Path>Source Files/framework/tcpip/stack</Path>
       </File>
@@ -256,10 +240,6 @@
       <File>
         <Name>tcp_manager.h</Name>
         <Path>Header Files/framework/tcpip/stack</Path>
-      </File>
-      <File>
-        <Name>sys_reset.c</Name>
-        <Path>Source Files/framework/system/reset/src</Path>
       </File>
       <File>
         <Name>sys_tmr.h</Name>
@@ -300,10 +280,6 @@
       <File>
         <Name>dns.h</Name>
         <Path>Header Files/framework/tcpip</Path>
-      </File>
-      <File>
-        <Name>sys_command.h</Name>
-        <Path>Header Files/framework/system/command</Path>
       </File>
       <File>
         <Name>tcpip_module_manager.h</Name>
@@ -510,10 +486,6 @@
         <Path>Header Files/framework/tcpip/stack</Path>
       </File>
       <File>
-        <Name>tcpip_commands_manager.h</Name>
-        <Path>Header Files/framework/tcpip/stack</Path>
-      </File>
-      <File>
         <Name>oahash.c</Name>
         <Path>Source Files/framework/tcpip/stack</Path>
       </File>
@@ -531,10 +503,6 @@
       </File>
       <File>
         <Name>icmp.c</Name>
-        <Path>Source Files/framework/tcpip/stack</Path>
-      </File>
-      <File>
-        <Name>tcpip_commands.c</Name>
         <Path>Source Files/framework/tcpip/stack</Path>
       </File>
       <File>
@@ -557,10 +525,6 @@
         <Name>tcpip.h</Name>
         <Path>Header Files/framework/tcpip</Path>
       </File>
-      <File>
-        <Name>sys_console_local.h</Name>
-        <Path>Header Files/framework/system/console/src</Path>
-      </File>
     </Files>
     <Templates>
       <Template>
@@ -571,7 +535,7 @@
       <Template>
         <Name>system_init.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>CE17C01FD9B5F428D741A15BD744FF09</Checksum>
+        <Checksum>98A542D31E22EF3B58AAC4B69AC987F6</Checksum>
       </Template>
       <Template>
         <Name>main.c</Name>
@@ -580,7 +544,7 @@
       <Template>
         <Name>system_definitions.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>49E4927C046874BA42AF610B01F13367</Checksum>
+        <Checksum>C2D0EFA7193ABC7C94A1ED0D9C43235F</Checksum>
       </Template>
       <Template>
         <Name>system_exceptions.c</Name>
@@ -588,23 +552,22 @@
         <Checksum>C111969CA43D6CEA1E9E33A6164E7AE0</Checksum>
       </Template>
       <Template>
+        <Name>restapi.h</Name>
+        <Path>Header Files/app</Path>
+      </Template>
+      <Template>
         <Name>app.c</Name>
         <Path>Source Files/app</Path>
       </Template>
       <Template>
-        <Name>sys_console_static.c</Name>
-        <Path>Source Files/app/system_config/default/framework/system/console/src</Path>
-        <Checksum>190C0247ECA1F7BCFADAF80040423F65</Checksum>
-      </Template>
-      <Template>
         <Name>system_tasks.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>67A258E510A0012639C49A16DFDD44A0</Checksum>
+        <Checksum>25B56EB4BCC98CFB4AF42A6AD0EE13E3</Checksum>
       </Template>
       <Template>
         <Name>system_config.h</Name>
         <Path>Header Files/app/system_config/default</Path>
-        <Checksum>6856E5AB4D449AA754B048BBC6EF289D</Checksum>
+        <Checksum>3BA0525554C2F8BDD7FD358A4A6DB9F4</Checksum>
       </Template>
       <Template>
         <Name>app.h</Name>
@@ -618,7 +581,11 @@
       <Template>
         <Name>system_interrupt.c</Name>
         <Path>Source Files/app/system_config/default</Path>
-        <Checksum>EB43EC2143A7F63E4FFE168EB8D286C8</Checksum>
+        <Checksum>4EA716BCC7BC692B21D81E47F670BD76</Checksum>
+      </Template>
+      <Template>
+        <Name>restapi.c</Name>
+        <Path>Source Files/app</Path>
       </Template>
       <Template>
         <Name>sys_clk_static.c</Name>
